@@ -1,15 +1,8 @@
-use rand::Rng;
+use rand::seq::IteratorRandom;
 use std::io::{self, prelude::*, BufReader};
 use std::fs::{File, OpenOptions};
 use std::collections::HashMap;
-//another way to randomly select:
-/* 
-//use rand::seq::SliceRandom;
-    //in main, add:
-   
-    let another_way = people.choose(& mut rand::thread_rng()).unwrap();
-    dbg!(another_way);
-*/
+
 fn main() {
 
     let mut file = new_file();
@@ -32,11 +25,8 @@ fn main() {
 
 
 fn random_value(hashmap: &HashMap<String, String>) {
-    let mut iter = hashmap.values();
-    let random_index = rand::thread_rng().gen_range(0..=hashmap.len()-1);
-
-    
-    println!("the next host will be: {}", &iter.nth(random_index).unwrap());
+    let iter = hashmap.values();
+    println!("the next host will be: {}", &iter.choose(&mut rand::thread_rng()).unwrap());
 }
 
 
