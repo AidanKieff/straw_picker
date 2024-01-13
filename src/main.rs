@@ -40,31 +40,23 @@ fn duplicate_checker (hashmap: &mut HashMap<String, String>, name: &String) -> R
 }
 
 fn preload_names(file: &mut File) -> HashMap<String, String> {
-    let mut string_buffer = String::new();
+    
+    let mut buffer = BufReader::new(file);
 
-    file.read_to_string(&mut string_buffer);
-
-    let hashmap = string_to_hashmap(&mut string_buffer);
+    let hashmap = string_to_hashmap(&mut buffer);
     hashmap
 }
 
-fn string_to_hashmap(s: &String) -> HashMap<String, String> {
+
+fn string_to_hashmap(s: &mut BufReader<&mut File>) -> HashMap<String, String> {
     let mut hashmap = HashMap::new();
-    let bytes = s.as_bytes();
-    let mut index = 0;
-    for (i, &item) in bytes.iter().enumerate() {
-        
-        if item == b'\n' {
-            let name = &s[index..i];
-            index = i +1;
-            if let Err(()) = duplicate_checker(&mut hashmap, &name.to_string()) {
-                continue
-            }
+    for x in s.lines() {
+        if let Err(()) = duplicate_checker(&mut hashmap, &x.unwrap()) {
+            continue
         }
     }
     hashmap
 }
-
 
 fn userload_names(file: &mut File, hashmap: &mut HashMap<String, String>) {
     loop {
@@ -118,16 +110,4 @@ fn preload_names_to_file(file: &mut File) {
 
 
 
-fn vectorize(file: &mut File) -> Vec<String> {
 
-    let mut vector: Vec<String> = Vec::new();
-
-    let file = BufReader::new(file);
-    
-    for x in file.lines() {
-        vector.push(x.unwrap());
-    }
-
-    dbg!("{}", &vector);
-    vector
-}
