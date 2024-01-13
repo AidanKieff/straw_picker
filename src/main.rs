@@ -24,8 +24,7 @@ fn main() {
 
 
 fn random_value(hashmap: &HashMap<String, String>) {
-    let iter = hashmap.values();
-    println!("the next host will be: {}", &iter.choose(&mut rand::thread_rng()).unwrap());
+    println!("the next host will be: {}", hashmap.values().choose(&mut rand::thread_rng()).unwrap());
 }
 
 
