@@ -95,7 +95,6 @@ fn new_file() -> File {
 
 
 
-
 fn preload_names_to_file(file: &mut File) {
     file.write(b"jerry\n");
     file.write(b"another name\n");
