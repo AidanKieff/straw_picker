@@ -18,7 +18,6 @@ fn main() {
 
 
     random_value(&people);
-    dbg!(&people);
 
 }
 
@@ -77,11 +76,11 @@ fn userload_names(file: &mut File, hashmap: &mut HashMap<String, String>) {
         .read_line(&mut input)
         .expect("Failed to read line");
 
-        let clean_input = input.trim().to_string();
-        if clean_input.to_lowercase().as_str() == "done" {break}
+        let clean_input = input.trim();
+        if clean_input.to_lowercase() == "done" {break}
 
         
-        if let Err(()) = duplicate_checker(hashmap, &clean_input) {
+        if let Err(()) = duplicate_checker(hashmap, &clean_input.to_string()) {
             continue
         }
 
