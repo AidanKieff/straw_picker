@@ -75,7 +75,7 @@ fn userload_names(file: &mut File, hashmap: &mut HashMap<String, String>) {
             continue
         }
 
-        file.write(input.as_bytes());
+        file.write(input.as_bytes()).expect("Failed to write");
 
         dbg!(&hashmap);
     }
@@ -96,10 +96,10 @@ fn new_file() -> File {
 
 
 fn preload_names_to_file(file: &mut File) {
-    file.write(b"jerry\n");
-    file.write(b"another name\n");
-    file.write(b"barry\n");
-    file.write(b"Seymore\n");
+    file.write(b"jerry\n").expect("Failed to write");
+    file.write(b"another name\n").expect("Failed to write");
+    file.write(b"barry\n").expect("Failed to write");
+    file.write(b"Seymore\n").expect("Failed to write");
     //if file is appending
     //this will move file cursor back to start. 
     //so that if it's read after,
